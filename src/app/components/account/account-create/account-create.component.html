@@ -1,0 +1,47 @@
+<mat-card>
+  <mat-card-title>Nova Conta</mat-card-title>
+  <form [formGroup]="formAccount">
+    <mat-form-field>
+        <mat-select class="form-control" id="create-mes" formControlName="mes" placeholder="Selecione o mes" class="--small">
+          <mat-option *ngFor="let mes of meses" [value]="mes.codigo">{{mes.dsMes}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-select class="form-control" id="create-conta" formControlName="conta" placeholder="Tipo de Conta" class="--small">
+          <mat-option *ngFor="let conta of tipoContas" [value]="conta.codigo">{{conta.descricao}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput id="create-valorConta" formControlName="valorConta" placeholder="Valor da Conta (R$)" (keypress)="inputKeyPressAsBrlCurrency($event)">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="pickerDataVencimento" placeholder="Data de vencimento" id="create-dataVencimento" formControlName="dataVencimento" readonly="true">
+        <mat-datepicker-toggle matSuffix [for]="pickerDataVencimento"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #pickerDataVencimento></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="pickerDataPagamento" placeholder="Data de Pagamento" id="create-dataPagamento" formControlName="dataPagamento" readonly="true">
+        <mat-datepicker-toggle matSuffix [for]="pickerDataPagamento"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #pickerDataPagamento></mat-datepicker>
+      </mat-form-field>
+
+    <mat-form-field>
+        <mat-select class="form-control" id="create-status" formControlName="status" placeholder="Status de Conta" class="--small">
+          <mat-option *ngFor="let status of statusContas" [value]="status.codigo">{{status.descricao}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea matInput placeholder="Comentario" id="create-comentario" formControlName="comentario" ></textarea>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button id="create-btn-save" (click)="createAccount()" color="primary" [disabled]="!formAccount.valid || addCan">
+    Salvar
+  </button>
+  <button mat-raised-button id="create-btn-cancel"(click)="cancelAccount()">Cancelar</button>
+</mat-card>

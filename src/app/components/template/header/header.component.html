@@ -1,0 +1,20 @@
+<mat-toolbar class="header mat-elevation-z4" *ngIf="mostrar">
+    <span class="span-logo">
+        <a routerLink="/">
+            <img class="logo" src="assets/img/logo.png" alt="logo">
+        </a>
+    </span>
+    <span class="title-group">
+        <a routerLink="{{ routeUrl }}">
+            <i class="material-icons">
+                {{ icon }}
+            </i>
+            {{ title }}
+        </a>
+    </span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>favorite</mat-icon>
+    </button>
+    <span class="name-user">{{user}}</span>
+</mat-toolbar>

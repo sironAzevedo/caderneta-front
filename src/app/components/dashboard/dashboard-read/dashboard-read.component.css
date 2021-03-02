@@ -1,0 +1,39 @@
+.basic-container {
+    margin: 20px;
+}
+.mat-grid-list {
+    margin: 20px 15px 0px 0px;
+}
+
+.btn-order {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mat-card {
+    margin: 10px;
+    border-radius: 10px;
+    height: calc(100% - 70px);
+}
+
+.mat-card > .mat-card-content {
+    margin-top: 35px;
+}
+
+.div-btn {
+    margin: 5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-add {
+    position: fixed;
+    bottom: 9rem;
+    height: 70px;
+    width: 70px;
+}
+
+.mat-card-header .mat-card-title {
+    font-size: 20px;
+    font-weight: 500;
+}

@@ -1,0 +1,38 @@
+.header {
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    position: fixed;
+}
+
+.span-logo {
+    padding-left: 25px;
+}
+
+.header a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+}
+
+.header .logo {
+    max-height: 50px;
+}
+
+.header .title-group {
+    padding-left: 25px;
+}
+
+.header .title-group i {
+    padding-right: 10px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.name-user {
+    font-size: 1rem;
+    font-weight: 300px;
+}

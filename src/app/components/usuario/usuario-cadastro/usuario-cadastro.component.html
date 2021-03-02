@@ -1,0 +1,33 @@
+<mat-card class="dashboard mat-elevation-z3">
+    <mat-card-title class="title">
+       Cadastro
+    </mat-card-title>    
+</mat-card>
+
+<mat-card class="card-form">
+    <form [formGroup]="formCadastro"> 
+        <mat-form-field>
+            <input matInput formControlName="nome" placeholder="Nome" required 
+            [ngClass]="{ 
+                'is-valid': isFieldValid, 
+                'is-invalid': isFieldInValid
+            }">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="email" matInput formControlName="email" name="email" placeholder="Email" required
+            [ngClass]="{ 
+                'is-valid': isFieldValid, 
+                'is-invalid': isFieldInValid
+            }">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="password" matInput formControlName="senha" placeholder="Senha" [ngClass]="{ 'is-valid': !f.senha.errors }" required>
+        </mat-form-field>
+    </form>      
+  
+    <button mat-raised-button (click)="cadastrar()" color="primary" [disabled]="!formCadastro.valid || addCan">Cadastrar</button>
+    <button mat-raised-button (click)="cancelar()">Cancelar</button>
+</mat-card>
+  

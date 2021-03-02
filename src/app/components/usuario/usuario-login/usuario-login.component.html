@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <form [formGroup]="formLogin"> 
+        <mat-form-field>
+            <input type="email" matInput formControlName="email" name="email" placeholder="Email" required
+            [ngClass]="{ 
+                'is-valid': isFieldValid, 
+                'is-invalid': isFieldInValid
+            }">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="password" matInput formControlName="senha" placeholder="Senha" [ngClass]="{ 'is-valid': !f.senha.errors }" required>
+        </mat-form-field>
+    </form>      
+  
+    <button mat-raised-button (click)="login()" color="primary" [disabled]="!formLogin.valid || addCan">Login</button>
+    <button mat-raised-button (click)="cadastro()">Cadastro</button>
+</mat-card>
+  

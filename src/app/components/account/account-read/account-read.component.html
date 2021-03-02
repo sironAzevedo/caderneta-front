@@ -1,0 +1,41 @@
+<mat-card class="dashboard mat-elevation-z3">
+    <mat-card-title class="title">
+       {{ dsMes }} 
+    </mat-card-title>    
+</mat-card>
+<div class="content">    
+    <div fxLayout="row wrap">
+        <div  *ngFor="let item of accounts">
+            <mat-card class="mat-elevation-z4">
+                <mat-card-header class="card-header">
+                    <mat-card-title>{{item.tipoConta.tipo}}</mat-card-title>
+                    <mat-card-subtitle> Valor Conta: R$ {{ item.valorConta }} </mat-card-subtitle>
+                    <button mat-mini-fab color="primary"  [matMenuTriggerFor]="menu" (click)="$event.preventDefault()">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu"  id="btn-menu" xPosition="before" overlapTrigger="false">
+                        <button id="btn-update" mat-menu-item (click)="updateAccount(item.codigo)">
+                            <mat-icon>create</mat-icon>
+                            <span>Edit</span>
+                        </button>
+                        <button id="btn-delete" mat-menu-item (click)="deletAccount(item.codigo)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                        </button>
+                    </mat-menu>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>Data Vencimento: {{ item.dataVencimento }}</p>
+                    <p>Data Pagamento: {{ item.dataPagamento }}</p>
+                    <p>Status: {{ item.status.descricao }}</p>
+                    <p>Comentario: {{ item.comentario }}</p>
+                </mat-card-content>                
+            </mat-card>
+        </div>
+    </div>
+    <div class="div-btn">
+        <button id="add-account" (click)="navigateToAccountCreate()" mat-fab color="primary" matTooltip="Add Account" class="button-add">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</div>

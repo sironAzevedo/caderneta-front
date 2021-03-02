@@ -1,0 +1,21 @@
+.mat-card {
+    margin: 20px 15px 0px 0px;
+}
+
+.mat-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.div-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.button-add {
+    position: fixed;
+    bottom: 10rem;
+    height: 70px;
+    width: 70px;
+}
