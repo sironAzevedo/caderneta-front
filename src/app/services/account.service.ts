@@ -28,7 +28,7 @@ export class AccountService {
   }
 
   create(account: Account): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/ms-contas/v1/account`, account);
+    return this.http.post<any>(`${this.baseUrl}/ms-contas/v1/contas`, account);
   }
 
   update(account: Account): Observable<any> {
