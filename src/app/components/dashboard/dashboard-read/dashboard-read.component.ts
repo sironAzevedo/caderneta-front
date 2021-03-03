@@ -31,7 +31,7 @@ export class DashboardReadComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     const email = this.storageService.getLocalUser().email;
     if(email) {
       this.dashboardService.findAll(email).subscribe((res: any) => {

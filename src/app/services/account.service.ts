@@ -1,3 +1,4 @@
+import { AmbienteService } from './ambiente.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -12,12 +13,15 @@ import { TipoConta } from '../model/tipo-conta.model';
 })
 export class AccountService {
 
-  private baseUrl: string = 'http://localhost:8765';
+  private baseUrl: string = '#';
 
   constructor(
     private snackBar: MatSnackBar,
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private ambiente: AmbienteService
+  ) {
+      this.ambiente.url_account().subscribe(res => this.baseUrl = res);
+   }
 
   showMessage(msg: string): void {
     this.snackBar.open(msg, 'X', {
@@ -28,38 +32,38 @@ export class AccountService {
   }
 
   create(account: Account): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/ms-contas/v1/contas`, account);
+    return this.http.post<any>(`${this.baseUrl}/v1/contas`, account);
   }
 
   update(account: Account): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/ms-contas/v1/contas`, account);
+    return this.http.put<any>(`${this.baseUrl}/v1/contas`, account);
   }
 
   deletAccount(email: string, id: number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/ms-contas/v1/contas?email=${email}&conta=${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/v1/contas?email=${email}&conta=${id}`);
   }
 
   get(email: string, id: number): Observable<Account> {
-    return this.http.get<Account>(`${this.baseUrl}/ms-contas/v1/contas/by-code?email=${email}&conta=${id}`);
+    return this.http.get<Account>(`${this.baseUrl}/v1/contas/by-code?email=${email}&conta=${id}`);
   }
 
   listAccountByMes(email: string, mes: number): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.baseUrl}/ms-contas/v1/contas/by-mes?email=${email}&mes=${mes}`);
+    return this.http.get<Account[]>(`${this.baseUrl}/v1/contas/by-mes?email=${email}&mes=${mes}`);
   }
 
   listMes(): Observable<Mes[]> {
-    return this.http.get<Mes[]>(`${this.baseUrl}/ms-contas/v1/contas/mes`);
+    return this.http.get<Mes[]>(`${this.baseUrl}/v1/contas/mes`);
   }
 
   getMes(id: number): Observable<Mes> {
-    return this.http.get<Mes>(`${this.baseUrl}/ms-contas/v1/contas/mes/by-code?code=${id}`);
+    return this.http.get<Mes>(`${this.baseUrl}/v1/contas/mes/by-code?code=${id}`);
   }
 
   listTypeAccount(): Observable<TipoConta[]> {
-    return this.http.get<TipoConta[]>(`${this.baseUrl}/ms-contas/v1/contas/tipo`);
+    return this.http.get<TipoConta[]>(`${this.baseUrl}/v1/contas/tipo`);
   }
 
   listStatusAccount(): Observable<Status[]> {
-    return this.http.get<Status[]>(`${this.baseUrl}/ms-contas/v1/contas/status`);
+    return this.http.get<Status[]>(`${this.baseUrl}/v1/contas/status`);
   }
 }

@@ -8,6 +8,7 @@ import { of } from 'rxjs/internal/observable/of';
 import { tap} from 'rxjs/operators';
 import { Credenciais, LocalUser } from '../model/credenciais.model';
 import { User } from '../model/user.model';
+import { AmbienteService } from './ambiente.service';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -16,13 +17,16 @@ import { StorageService } from './storage.service';
 export class UserService {
 
   authenticationState = new BehaviorSubject(false);
-  private baseUrl: string = 'http://localhost:8765';
+  private baseUrl: string = '#';
 
   constructor(
     private http: HttpClient,
     private storage: StorageService,
-    private snackBar: MatSnackBar
-  ) { }
+    private snackBar: MatSnackBar,
+    private ambiente: AmbienteService
+  ) { 
+    this.ambiente.url_user().subscribe(res => this.baseUrl = res);
+  }
 
 
   showMessage(msg: string): void {
@@ -34,15 +38,15 @@ export class UserService {
   }
 
   authenticate(user: Credenciais): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/ms-user/v1/user/login`, user);
+    return this.http.post<any>(`${this.baseUrl}/v1/user/login`, user);
   }
 
   create(user: User): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/ms-user/v1/user`, user);
+    return this.http.post<any>(`${this.baseUrl}/v1/user`, user);
   }
 
   get(email: string): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/ms-user/v1/user/by-email?email=${email}`);
+    return this.http.get<User>(`${this.baseUrl}/v1/user/by-email?email=${email}`);
   }
 
   successfulLogin(authorizationValue: string) {
