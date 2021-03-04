@@ -1,10 +1,10 @@
 FROM node:latest as angular
 WORKDIR /app
 COPY package.json /app
-COPY environment.js /app
 Run npm install -g npm@7.6.1
 RUN npm install --silent
 COPY . .
+COPY environment.js /app
 RUN npm run build
 
 FROM nginx:alpine
