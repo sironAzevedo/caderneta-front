@@ -6,8 +6,11 @@ const heroku = `export const environment = {
     ambiente: '${value}'
 }`
 
-fs.writeFile('src/environments/environment.prod.ts', heroku, (err, result) => {
-    if(err){
-        console.log('Falha ao escrever arquivo com variavel de ambiente');
-    }
-});
+if(value !== 'local') {
+    console.log(value);
+    fs.writeFile('src/environments/environment.prod.ts', heroku, (err, result) => {
+        if(err){
+            console.log('Falha ao escrever arquivo com variavel de ambiente');
+        }
+    });
+}
