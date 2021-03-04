@@ -2,11 +2,12 @@ import { AmbienteService } from './ambiente.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Account } from '../model/account.model';
 import { Mes } from '../model/mes.model';
 import { Status } from '../model/status-conta.model';
 import { TipoConta } from '../model/tipo-conta.model';
+import { retry, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -44,26 +45,62 @@ export class AccountService {
   }
 
   get(email: string, id: number): Observable<Account> {
-    return this.http.get<Account>(`${this.baseUrl}/v1/contas/by-code?email=${email}&conta=${id}`);
+    return this.http.get<Account>(`${this.baseUrl}/v1/contas/by-code?email=${email}&conta=${id}`).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
   }
 
   listAccountByMes(email: string, mes: number): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.baseUrl}/v1/contas/by-mes?email=${email}&mes=${mes}`);
+    return this.http.get<Account[]>(`${this.baseUrl}/v1/contas/by-mes?email=${email}&mes=${mes}`).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
   }
 
   listMes(): Observable<Mes[]> {
-    return this.http.get<Mes[]>(`${this.baseUrl}/v1/contas/mes`);
+    return this.http.get<Mes[]>(`${this.baseUrl}/v1/contas/mes`).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
   }
 
   getMes(id: number): Observable<Mes> {
-    return this.http.get<Mes>(`${this.baseUrl}/v1/contas/mes/by-code?code=${id}`);
+    return this.http.get<Mes>(`${this.baseUrl}/v1/contas/mes/by-code?code=${id}`).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
   }
 
   listTypeAccount(): Observable<TipoConta[]> {
-    return this.http.get<TipoConta[]>(`${this.baseUrl}/v1/contas/tipo`);
+    return this.http.get<TipoConta[]>(`${this.baseUrl}/v1/contas/tipo`).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
   }
 
   listStatusAccount(): Observable<Status[]> {
-    return this.http.get<Status[]>(`${this.baseUrl}/v1/contas/status`);
+    return this.http.get<Status[]>(`${this.baseUrl}/v1/contas/status`).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
   }
 }

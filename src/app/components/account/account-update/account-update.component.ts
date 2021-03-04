@@ -73,21 +73,21 @@ export class AccountUpdateComponent implements OnInit {
   }
 
   loadAccount() {
-    this.route.params.subscribe(params => {
-      if(params) {
-        this.contaId = +params['id'];
-        this.accountService.get(this.emailUser, this.contaId).subscribe(res => {
-          this.formAccount?.controls['mes'].setValue(res.mes.codigo);
-          this.formAccount?.controls['conta'].setValue(res.tipoConta.codigo);
-          this.formAccount?.controls['valorConta'].setValue(res.valorConta);
-          this.formAccount?.controls['status'].setValue(res.status.codigo);
-          this.formAccount?.controls['dataVencimento'].setValue(new Date(res.dataVencimento));
-          this.formAccount?.controls['dataPagamento'].setValue(new Date(res.dataPagamento||""));
-          this.formAccount?.controls['comentario'].setValue(res.comentario);
-          this.mesId = res.mes.codigo;
-        })
-      }
-   });
+   this.route.data.subscribe(
+     (info) => {
+       let account = info.account;
+       this.contaId = account.codigo;
+       this.formAccount?.controls['mes'].setValue(account.mes.codigo);
+       this.formAccount?.controls['conta'].setValue(account.tipoConta.codigo);
+       this.formAccount?.controls['valorConta'].setValue('R$ ' + account.valorConta);
+       this.formAccount?.controls['status'].setValue(account.status.codigo);
+       this.formAccount?.controls['dataVencimento'].setValue(new Date(account.dataVencimento));
+       this.formAccount?.controls['dataPagamento'].setValue(new Date(account.dataPagamento||""));
+       this.formAccount?.controls['comentario'].setValue(account.comentario);
+       this.mesId = account.mes.codigo;
+       console.log(account)
+     }
+   )
   }
 
   update(): void {

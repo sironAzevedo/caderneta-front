@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs/internal/observable/of';
-import { tap} from 'rxjs/operators';
+import { catchError, retry, tap} from 'rxjs/operators';
 import { Credenciais, LocalUser } from '../model/credenciais.model';
 import { User } from '../model/user.model';
 import { AmbienteService } from './ambiente.service';
@@ -38,7 +38,13 @@ export class UserService {
   }
 
   authenticate(user: Credenciais): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/v1/user/login`, user);
+    return this.http.post<any>(`${this.baseUrl}/v1/user/login`, user).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
   }
 
   create(user: User): Observable<any> {
@@ -46,7 +52,13 @@ export class UserService {
   }
 
   get(email: string): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/v1/user/by-email?email=${email}`);
+    return this.http.get<User>(`${this.baseUrl}/v1/user/by-email?email=${email}`).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
   }
 
   successfulLogin(authorizationValue: string) {

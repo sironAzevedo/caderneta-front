@@ -1,3 +1,5 @@
+import { AccountUpdateResolver } from './components/account/account-update/guards/accout-update.resolver';
+import { DashboardReadResolver } from './components/dashboard/guards/dashboard-read.resolver';
 import { UsuarioLoginComponent } from './components/usuario/usuario-login/usuario-login.component';
 import { AccountUpdateComponent } from './components/account/account-update/account-update.component';
 import { AccountReadComponent } from './components/account/account-read/account-read.component';
@@ -14,10 +16,14 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedGuardService] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedGuardService],
+    resolve: {dashboads: DashboardReadResolver}
+  },
   { path: 'account/create', component: AccountCreateComponent, canActivate: [LoggedGuardService] },
   { path: 'account/read/:mes', component: AccountReadComponent, canActivate: [LoggedGuardService] },
-  { path: 'account/update/:id', component: AccountUpdateComponent, canActivate: [LoggedGuardService] },
+  { path: 'account/update/:id', component: AccountUpdateComponent, canActivate: [LoggedGuardService],
+    resolve: {account: AccountUpdateResolver}
+  },
   { path: 'about', component: AboutComponent, canActivate: [LoggedGuardService] },
   { path: 'login', component: UsuarioLoginComponent, canActivate: [AuthGuardService] },
   { path: 'logout', component: UsuarioLogoutComponent },

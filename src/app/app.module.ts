@@ -24,6 +24,8 @@ import { UsuarioLoginComponent } from './components/usuario/usuario-login/usuari
 import { AboutComponent } from './components/about/about.component';
 import { UsuarioLogoutComponent } from './components/usuario/usuario-logout/usuario-logout.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { DashboardReadResolver } from './components/dashboard/guards/dashboard-read.resolver';
+import { AccountUpdateResolver } from './components/account/account-update/guards/accout-update.resolver';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [FormatDatePipe, NormalizeNumberPipe],
+  providers: [FormatDatePipe, NormalizeNumberPipe, DashboardReadResolver, AccountUpdateResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

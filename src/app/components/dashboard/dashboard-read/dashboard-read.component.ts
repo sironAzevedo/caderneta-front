@@ -1,6 +1,6 @@
 import { StorageService } from './../../../services/storage.service';
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Dashboard } from 'src/app/model/dashboard.model';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { HeaderService } from 'src/app/services/header.service';
@@ -19,6 +19,7 @@ export class DashboardReadComponent implements OnInit {
   constructor(
     private headerService:HeaderService,
     private dashboardService: DashboardService,
+    private route: ActivatedRoute,
     private router: Router,
     private storageService: StorageService
   ) { 
@@ -32,15 +33,16 @@ export class DashboardReadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const email = this.storageService.getLocalUser().email;
-    if(email) {
-      this.dashboardService.findAll(email).subscribe((res: any) => {
-        this.dashboard = res.content;
-        if(this.dashboard.length !== 0) {
-          this.mostrar = true;
-        }
-      });
-    }
+      this.route.data.subscribe(
+        (info) => {
+          console.log(info)
+          this.dashboard = info.dashboads.content;
+          if(this.dashboard.length !== 0) {
+            this.mostrar = true;
+          }
+        })
+
+
   }
 
   navigateToAccountRead(id: string): void {
