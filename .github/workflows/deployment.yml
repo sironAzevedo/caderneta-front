@@ -6,18 +6,18 @@ on:
 
 jobs:
             
-    docker:
-        name: Docker Hub
-        runs-on: ubuntu-18.04
-        steps:
-        - uses: actions/checkout@v1
-        - name: Publish to Docker Hub
-          uses: docker/build-push-action@v1
-          with:
-           username: ${{ secrets.DOCKER_USER }}
-           password: ${{ secrets.DOCKER_PASS }}
-           repository: sirondba/caderneta-front
-           tags: ${{github.run_number}}
+#    docker:
+#        name: Docker Hub
+#        runs-on: ubuntu-18.04
+#        steps:
+#        - uses: actions/checkout@v1
+#        - name: Publish to Docker Hub
+#          uses: docker/build-push-action@v1
+#          with:
+#           username: ${{ secrets.DOCKER_USER }}
+#           password: ${{ secrets.DOCKER_PASS }}
+#           repository: sirondba/caderneta-front
+#           tags: ${{github.run_number}}
             
     deploy:
         runs-on: ubuntu-latest
