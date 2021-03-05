@@ -6,17 +6,13 @@ import { environment } from '../../environments/environment.prod';
 @Injectable({
   providedIn: 'root'
 })
-export class AmbienteService {
+export class AmbienteService { 
 
-  env: any = 'local';
-
-  constructor() { 
-    this.env = localStorage.getItem('env');
-  }
+  constructor() {}
 
   url_account(): Observable<string> {
     let res: string = '';
-    if(this.env === null) {
+    if(environment.ambiente === 'Local') {
       res = 'http://localhost:8001';
     } else {
       res = 'https://caderneta-contas-services.herokuapp.com'
@@ -26,7 +22,7 @@ export class AmbienteService {
 
   url_user(): Observable<string> {
     let res: string = '';
-    if(this.env === null) {
+    if(environment.ambiente === 'Local') {
       res = 'http://localhost:8002';
     } else {
       res = 'https://caderneta-user-services.herokuapp.com'
@@ -36,7 +32,7 @@ export class AmbienteService {
 
   url_dashboard(): Observable<string> {
     let res: string = '';
-    if(this.env === null) {
+    if(environment.ambiente === 'Local') {
       res = 'http://localhost:8003';
     } else {
       res = 'https://caderneta-dashboard-services.herokuapp.com'
