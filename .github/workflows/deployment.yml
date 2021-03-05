@@ -10,11 +10,6 @@ jobs:
         name: Docker Hub
         runs-on: ubuntu-18.04
         steps:
-        - uses: actions/checkout@v2
-        - name: Use Node.js
-          uses: actions/setup-node@v1
-          with:
-            node-version: '12.x'
         - uses: actions/checkout@v1
         - name: Publish to Docker Hub
           uses: docker/build-push-action@v1

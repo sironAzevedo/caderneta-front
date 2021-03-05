@@ -2,7 +2,6 @@ FROM node:12.7-alpine as angular
 WORKDIR /app
 
 COPY package.json /app
-COPY environment.js /app
 RUN npm i npm@latest -g 
 RUN npm install
 COPY . .

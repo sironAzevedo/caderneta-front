@@ -8,11 +8,15 @@ import { environment } from '../../environments/environment.prod';
 })
 export class AmbienteService {
 
-  constructor() { }
+  env: any = 'local';
+
+  constructor() { 
+    this.env = localStorage.getItem('env');
+  }
 
   url_account(): Observable<string> {
     let res: string = '';
-    if(environment.ambiente === 'Local') {
+    if(this.env === null) {
       res = 'http://localhost:8001';
     } else {
       res = 'https://caderneta-contas-services.herokuapp.com'
@@ -22,7 +26,7 @@ export class AmbienteService {
 
   url_user(): Observable<string> {
     let res: string = '';
-    if(environment.ambiente === 'Local') {
+    if(this.env === null) {
       res = 'http://localhost:8002';
     } else {
       res = 'https://caderneta-user-services.herokuapp.com'
@@ -32,7 +36,7 @@ export class AmbienteService {
 
   url_dashboard(): Observable<string> {
     let res: string = '';
-    if(environment.ambiente === 'Local') {
+    if(this.env === null) {
       res = 'http://localhost:8003';
     } else {
       res = 'https://caderneta-dashboard-services.herokuapp.com'
