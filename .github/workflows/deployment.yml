@@ -22,7 +22,7 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         name: Deploy Heroku
-        #needs: docker
+        needs: docker
         steps:
         - uses: actions/checkout@v2
         - name: Deploy to Heroku
