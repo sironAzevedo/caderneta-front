@@ -6,16 +6,15 @@ on:
 
 jobs:
 
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
-            
     docker:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+        name: Use Node.js
+        runs-on: ubuntu-18.04
+        steps:
+        - uses: actions/checkout@v2
+        - name: Use Node.js
+          uses: actions/setup-node@v1
+          with:
+            node-version: '12.x'
         name: Docker Hub
         runs-on: ubuntu-18.04
         steps:            
