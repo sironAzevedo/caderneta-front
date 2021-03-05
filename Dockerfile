@@ -1,9 +1,10 @@
-FROM node:latest as angular
+FROM node:12.7-alpine as angular
 WORKDIR /app
+
 COPY package.json /app
-Run npm install -g npm@7.6.1
 COPY environment.js /app
-RUN npm install --silent
+RUN npm i npm@latest -g 
+RUN npm install
 COPY . .
 RUN npm run build
 
