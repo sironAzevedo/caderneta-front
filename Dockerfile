@@ -1,4 +1,4 @@
-FROM node:12.7-alpine as angular
+FROM node:latest as angular
 WORKDIR /app
 
 COPY package.json /app
