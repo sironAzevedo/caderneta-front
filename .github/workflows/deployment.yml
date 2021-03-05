@@ -5,9 +5,9 @@ on:
     branches: [ main ]
 
 jobs:
-
+            
     docker:
-        name: Use Node.js
+        name: Docker Hub
         runs-on: ubuntu-18.04
         steps:
         - uses: actions/checkout@v2
@@ -15,9 +15,6 @@ jobs:
           uses: actions/setup-node@v1
           with:
             node-version: '12.x'
-        name: Docker Hub
-        runs-on: ubuntu-18.04
-        steps:            
         - uses: actions/checkout@v1
         - name: Publish to Docker Hub
           uses: docker/build-push-action@v1
