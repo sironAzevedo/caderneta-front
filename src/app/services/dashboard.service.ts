@@ -19,6 +19,12 @@ export class DashboardService {
    }
 
   findAll(email: string): Observable<Dashboard[]> {
-    return this.http.get<Dashboard[]>(`${this.baseUrl}/v1/dashboard?email=${email}`);
+    return this.http.get<Dashboard[]>(`${this.baseUrl}/v1/dashboard?email=${email}`).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
   }
 }
