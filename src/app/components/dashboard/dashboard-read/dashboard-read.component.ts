@@ -8,7 +8,7 @@ import { HeaderService } from 'src/app/services/header.service';
 @Component({
   selector: 'app-dashboard-read',
   templateUrl: './dashboard-read.component.html',
-  styleUrls: ['./dashboard-read.component.css']
+  styleUrls: ['./dashboard-read.component.css'],
 })
 export class DashboardReadComponent implements OnInit {
 
@@ -41,8 +41,6 @@ export class DashboardReadComponent implements OnInit {
             this.mostrar = true;
           }
         })
-
-
   }
 
   navigateToAccountRead(id: string): void {
@@ -61,5 +59,4 @@ export class DashboardReadComponent implements OnInit {
   orderList(num: number) {
     this.order = num;
   }
-
 }

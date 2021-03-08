@@ -13,7 +13,6 @@
 .mat-card {
     margin: 10px;
     border-radius: 10px;
-    height: calc(100% - 70px);
 }
 
 .mat-card > .mat-card-content {
@@ -31,6 +30,24 @@
     bottom: 9rem;
     height: 70px;
     width: 70px;
+}
+
+.div-header {
+    display: flex;
+    margin-right: 1rem;
+    justify-content: space-between;
+}
+
+.div-header > span {
+    height: 35px;
+    width: 35px;
+    background-color: rgb(227, 94, 107);
+    border-radius: 50%;
+    font-size: 2rem;
+    font-weight: 500;
+    margin-top: -8px;
+    text-align: center;
+    line-height: 2rem;
 }
 
 .mat-card-header .mat-card-title {

@@ -8,7 +8,7 @@
         <div  *ngFor="let item of accounts">
             <mat-card class="mat-elevation-z4">
                 <mat-card-header class="card-header">
-                    <mat-card-title>{{item.tipoConta.tipo}}</mat-card-title>
+                    <mat-card-title>{{item.tipoConta.descricao}}</mat-card-title>
                     <mat-card-subtitle> Valor Conta: R$ {{ item.valorConta }} </mat-card-subtitle>
                     <button mat-mini-fab color="primary"  [matMenuTriggerFor]="menu" (click)="$event.preventDefault()">
                         <mat-icon>more_vert</mat-icon>
@@ -18,7 +18,7 @@
                             <mat-icon>create</mat-icon>
                             <span>Edit</span>
                         </button>
-                        <button id="btn-delete" mat-menu-item (click)="deletAccount(item.codigo)">
+                        <button id="btn-delete" mat-menu-item (click)="deletAccount(item)">
                             <mat-icon>delete</mat-icon>
                             <span>Delete</span>
                         </button>

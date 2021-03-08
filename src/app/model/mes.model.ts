@@ -1,4 +1,4 @@
 export interface Mes {
-    codigo?: number;
+    codigo: number;
     dsMes: string;
 }

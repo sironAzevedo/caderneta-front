@@ -17,6 +17,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
+
 
 
 @NgModule({
@@ -38,11 +41,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
       MatSnackBarModule,
       MatNativeDateModule,
       MatGridListModule,
+      MatDialogModule,
+      MatBadgeModule
       /*MatAutocompleteModule,
       MatLineModule
       MatButtonToggleModule,
       MatChipsModule,
-      MatDialogModule,
       MatExpansionModule,
       MatPaginatorModule,
       MatProgressBarModule,
@@ -73,11 +77,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
       MatSnackBarModule,
       MatNativeDateModule,
       MatGridListModule,
+      MatDialogModule,
+      MatBadgeModule
       /*MatAutocompleteModule,
       MatLineModule
       MatButtonToggleModule,
       MatChipsModule,
-      MatDialogModule,
       MatExpansionModule,
       MatPaginatorModule,
       MatProgressBarModule,
