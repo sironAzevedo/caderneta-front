@@ -1,0 +1,12 @@
+.div-btn {
+    margin: 5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-add {
+    position: fixed;
+    bottom: 9rem;
+    height: 70px;
+    width: 70px;
+}

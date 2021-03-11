@@ -19,19 +19,6 @@
     margin-top: 35px;
 }
 
-.div-btn {
-    margin: 5rem;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.button-add {
-    position: fixed;
-    bottom: 9rem;
-    height: 70px;
-    width: 70px;
-}
-
 .div-header {
     display: flex;
     margin-right: 1rem;

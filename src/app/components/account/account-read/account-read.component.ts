@@ -24,7 +24,11 @@ export class AccountReadComponent implements OnInit {
     private accountService: AccountService,
     private storageService: StorageService,
     public dialog: MatDialog
-    ) { }
+    ) { 
+      this.accountService.listen().subscribe( (r:any) => {
+        this.accountService.listAccountByMes(this.emailUser, r).subscribe(res => this.accounts = res);
+      })
+    }
 
   ngOnInit(): void {
     this.emailUser = this.storageService.getLocalUser().email;
@@ -51,19 +55,16 @@ export class AccountReadComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(account.codigo && result) {
-        this.accountService.deletAccount(this.emailUser, account.codigo).subscribe(() => {      
+        this.accountService.deletAccount(this.emailUser, account.codigo).subscribe(() => {
           this.accountService.listAccountByMes(this.emailUser, account.mes.codigo).subscribe(res => {
-              this.accounts = res;
-              if(this.accounts.length == 0 || this.accounts == null)  {
-                this.router.navigate(['/']);
-              } else {
-                this.router.navigate(['/account/read', account.mes.codigo]);
-              }
+            if(res.length == 0 || res == null)  {
+              this.router.navigate(['/']);
+            } 
+            this.accounts = res;
           })
-          this.accountService.showMessage('Conta excluida com sucesso');
         })
-      } 
-
+        this.accountService.showMessage('Conta excluida com sucesso');
+      }
     });
   }
 

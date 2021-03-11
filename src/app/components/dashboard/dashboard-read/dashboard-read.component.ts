@@ -4,6 +4,8 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Dashboard } from 'src/app/model/dashboard.model';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { HeaderService } from 'src/app/services/header.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AccountCreateComponent } from '../../account/account-create/account-create.component';
 
 @Component({
   selector: 'app-dashboard-read',
@@ -21,7 +23,8 @@ export class DashboardReadComponent implements OnInit {
     private dashboardService: DashboardService,
     private route: ActivatedRoute,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public dialog: MatDialog
   ) { 
     this.mostrar = false;
     this.order = 2;
@@ -44,16 +47,7 @@ export class DashboardReadComponent implements OnInit {
   }
 
   navigateToAccountRead(id: string): void {
-    const params: NavigationExtras = {
-      state: {
-        mes: id
-      }
-    };
     this.router.navigate(['/account/read', id]);
-  }
-
-  navigateToAccountCreate(): void {
-    this.router.navigate(['/account/create']);
   }
 
   orderList(num: number) {

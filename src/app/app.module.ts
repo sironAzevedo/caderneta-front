@@ -27,6 +27,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { DashboardReadResolver } from './components/dashboard/guards/dashboard-read.resolver';
 import { AccountUpdateResolver } from './components/account/account-update/guards/accout-update.resolver';
 import { DialogMessageComponent } from './components/template/dialog/dialog-message/dialog-message.component';
+import { CreateAccountComponent } from './components/template/button/create-account/create-account.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { DialogMessageComponent } from './components/template/dialog/dialog-mess
     AboutComponent,
     UsuarioLogoutComponent,
     PageNotFoundComponent,
-    DialogMessageComponent
+    DialogMessageComponent,
+    CreateAccountComponent
   ],
   imports: [
     BrowserModule,

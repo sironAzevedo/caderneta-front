@@ -2,12 +2,13 @@ import { AmbienteService } from './ambiente.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { Observable, throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { Account } from '../model/account.model';
 import { Mes } from '../model/mes.model';
 import { Status } from '../model/status-conta.model';
 import { TipoConta } from '../model/tipo-conta.model';
 import { retry, catchError } from 'rxjs/operators';
+import { Dashboard } from '../model/dashboard.model';
 
 @Injectable({
   providedIn: 'root'
@@ -102,5 +103,25 @@ export class AccountService {
         return throwError(err);
       })
     );
+  }
+
+  dashboard(email: string): Observable<Dashboard[]> {
+    return this.http.get<Dashboard[]>(`${this.baseUrl}/v1/contas/dashboard?email=${email}&page=0&size=12`).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
+  }
+
+
+  private _listners = new Subject<any>();
+  listen(): Observable<any> {
+    return this._listners.asObservable();
+  }
+
+  filter(value: number) {
+    this._listners.next(value);
   }
 }

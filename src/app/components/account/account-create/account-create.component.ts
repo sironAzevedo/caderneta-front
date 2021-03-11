@@ -2,14 +2,20 @@ import { NormalizeNumberPipe } from './../../../shared/pipes/normalize-number.pi
 import { Status } from './../../../model/status-conta.model';
 import { Account } from './../../../model/account.model';
 import { AccountService } from './../../../services/account.service';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Mes } from 'src/app/model/mes.model';
 import { TipoConta } from 'src/app/model/tipo-conta.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
 import { FormatDatePipe } from 'src/app/shared/pipes/format-date.pipe';
 import { StorageService } from 'src/app/services/storage.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+export interface Data {
+  mesId?: number;
+}
+
 
 @Component({
   selector: 'app-account-create',
@@ -24,18 +30,22 @@ export class AccountCreateComponent implements OnInit {
   statusContas: Status[] = [];
   emailUser: string = '';
   addCan = false;
+  disabledMes = false;
 
+  startDate = new Date(1990, 0, 1);
+  
   constructor(
     private fb: FormBuilder,
-    private accountService: AccountService,
+    private accountService: AccountService,    
     private router: Router,
     private dateFormat: FormatDatePipe,
     private normalizeNumber: NormalizeNumberPipe,
     dateAdapter: DateAdapter<NativeDateAdapter>,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private dialogRef: MatDialogRef<AccountCreateComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Data
     ) { 
       dateAdapter.setLocale('pt-BR');
-
       this.formAccount = this.fb.group({
         mes: ['', Validators.required],
         conta: ['', Validators.required],
@@ -52,11 +62,19 @@ export class AccountCreateComponent implements OnInit {
     this.accountService.listMes().subscribe(res => this.meses = res);
     this.accountService.listTypeAccount().subscribe(res => this.tipoContas = res);
     this.accountService.listStatusAccount().subscribe(res => this.statusContas = res);
+       
+    if(this.data.mesId) {
+      this.accountService.getMes(this.data.mesId).subscribe(res => {
+        this.formAccount?.controls['mes'].setValue(res.codigo);
+        this.disabledMes = true;
+        this.setValueDate();
+      })
+    }  
   }
 
   createAccount(): void {
     this.addCan= true;
-    const formValues = this.formAccount.value;
+    const formValues = this.getFormGroup().value;
     const mes = {
       codigo: formValues.mes
     } as Mes;
@@ -82,13 +100,26 @@ export class AccountCreateComponent implements OnInit {
     }
 
     this.accountService.create(account).subscribe(() => {
+      this.dialogRef.close();
+      
+      if(this.data.mesId) {
+        this.accountService.filter(this.data.mesId);
+      } else {
+        this.router.navigate(['/account/read', mes.codigo]);
+      }
       this.accountService.showMessage('Conta inserida com sucesso');
-      this.router.navigate(['/account/read', mes.codigo]);
     })
   }
 
-  cancelAccount(): void {
-    this.router.navigate(['/']);
+  getFormGroup(): FormGroup {
+    return this.formAccount;
+  }
+
+  setValueDate() {
+    const values = this.getFormGroup().value;
+    if(values) {
+      this.startDate = new Date(new Date().getFullYear(), values.mes - 1, 1);
+    }
   }
 
   inputKeyPressAsBrlCurrency(event: KeyboardEvent) {
