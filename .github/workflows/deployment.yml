@@ -1,4 +1,4 @@
-name: heroku-caderneta-front
+name: deploy-caderneta-front
 
 on:
   push:
