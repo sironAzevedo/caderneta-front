@@ -14,7 +14,9 @@ export class AmbienteService {
     let res: string = '';
     if(environment.ambiente === 'Local') {
       res = 'http://localhost:8001';
-    } else {
+    } else if(environment.ambiente === 'docker') {
+      res = 'http://caderneta-contas-services:8001';
+    }else {
       res = 'https://caderneta-contas-services.herokuapp.com'
     }
     return of(res);
@@ -24,7 +26,9 @@ export class AmbienteService {
     let res: string = '';
     if(environment.ambiente === 'Local') {
       res = 'http://localhost:8002';
-    } else {
+    } else if(environment.ambiente === 'docker') {
+      res = 'http://caderneta-user-services:8002';
+    }else {
       res = 'https://caderneta-user-services.herokuapp.com'
     }
     return of(res);

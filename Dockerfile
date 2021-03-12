@@ -4,6 +4,8 @@ COPY package.json /app
 COPY environment.js /app
 RUN npm install --silent
 COPY . .
+
+ENV ENVIRONMENT=docker
 RUN npm run build
 
 FROM nginx:alpine
