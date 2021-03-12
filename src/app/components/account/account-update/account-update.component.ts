@@ -13,7 +13,6 @@ import { FormatDatePipe } from 'src/app/shared/pipes/format-date.pipe';
 import { NormalizeNumberPipe } from 'src/app/shared/pipes/normalize-number.pipe';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
-import { CustomDateAdapter } from 'src/app/shared/CustomDateAdapter';
 
 export const MY_FORMATS = {
   parse: {
