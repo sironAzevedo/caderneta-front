@@ -25,7 +25,6 @@ import { AboutComponent } from './components/about/about.component';
 import { UsuarioLogoutComponent } from './components/usuario/usuario-logout/usuario-logout.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { DashboardReadResolver } from './components/dashboard/guards/dashboard-read.resolver';
-import { AccountUpdateResolver } from './components/account/account-update/guards/accout-update.resolver';
 import { DialogMessageComponent } from './components/template/dialog/dialog-message/dialog-message.component';
 import { CreateAccountComponent } from './components/template/button/create-account/create-account.component';
 
@@ -59,7 +58,7 @@ import { CreateAccountComponent } from './components/template/button/create-acco
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [FormatDatePipe, NormalizeNumberPipe, DashboardReadResolver, AccountUpdateResolver],
+  providers: [FormatDatePipe, NormalizeNumberPipe, DashboardReadResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

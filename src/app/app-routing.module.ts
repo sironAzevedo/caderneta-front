@@ -1,4 +1,3 @@
-import { AccountUpdateResolver } from './components/account/account-update/guards/accout-update.resolver';
 import { DashboardReadResolver } from './components/dashboard/guards/dashboard-read.resolver';
 import { UsuarioLoginComponent } from './components/usuario/usuario-login/usuario-login.component';
 import { AccountUpdateComponent } from './components/account/account-update/account-update.component';
