@@ -16,7 +16,6 @@ export interface Data {
   mesId?: number;
 }
 
-
 @Component({
   selector: 'app-account-create',
   templateUrl: './account-create.component.html',

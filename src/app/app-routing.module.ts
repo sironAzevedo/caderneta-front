@@ -19,17 +19,12 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedGuardService],
     resolve: {dashboads: DashboardReadResolver}
   },
-  { path: 'account/create', component: AccountCreateComponent, canActivate: [LoggedGuardService] },
   { path: 'account/read/:mes', component: AccountReadComponent, canActivate: [LoggedGuardService] },
-  { path: 'account/update/:id', component: AccountUpdateComponent, canActivate: [LoggedGuardService],
-    resolve: {account: AccountUpdateResolver}
-  },
   { path: 'about', component: AboutComponent, canActivate: [LoggedGuardService] },
   { path: 'login', component: UsuarioLoginComponent, canActivate: [AuthGuardService] },
   { path: 'logout', component: UsuarioLogoutComponent },
   { path: 'cadastro', component: UsuarioCadastroComponent },
   { path: '**', component: PageNotFoundComponent, canActivate: [AuthGuardService] }
-
 ];
 
 @NgModule({

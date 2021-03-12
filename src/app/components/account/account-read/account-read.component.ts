@@ -1,3 +1,4 @@
+import { AccountUpdateComponent } from './../account-update/account-update.component';
 import { AccountService } from './../../../services/account.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -5,6 +6,8 @@ import { Account } from 'src/app/model/account.model';
 import { StorageService } from 'src/app/services/storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogMessageComponent } from '../../template/dialog/dialog-message/dialog-message.component';
+
+
 
 @Component({
   selector: 'app-account-read',
@@ -42,7 +45,16 @@ export class AccountReadComponent implements OnInit {
   }
 
   updateAccount(id: any) {
-    this.router.navigate(['/account/update', id]);
+    this.accountService.get(this.emailUser, id).subscribe(res => {
+      const dialogRef = this.dialog.open(AccountUpdateComponent, {
+        height: '650px',
+        width: '600px',
+        data: {
+          account: res
+        }
+      });
+    });
+    
   }
 
   deletAccount(account: Account) {

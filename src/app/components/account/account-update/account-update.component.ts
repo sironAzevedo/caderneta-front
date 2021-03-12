@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter } from '@angular/material/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from 'src/app/model/account.model';
 import { Mes } from 'src/app/model/mes.model';
@@ -10,11 +11,32 @@ import { AccountService } from 'src/app/services/account.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { FormatDatePipe } from 'src/app/shared/pipes/format-date.pipe';
 import { NormalizeNumberPipe } from 'src/app/shared/pipes/normalize-number.pipe';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as moment from 'moment';
+import { CustomDateAdapter } from 'src/app/shared/CustomDateAdapter';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 
 @Component({
   selector: 'app-account-update',
   templateUrl: './account-update.component.html',
-  styleUrls: ['./account-update.component.css']
+  styleUrls: ['./account-update.component.css'],
+  providers: [
+     // {provide: DateAdapter, useClass: CustomDateAdapter}
+    //{provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    //{provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    //{provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+  ]
 })
 export class AccountUpdateComponent implements OnInit {
 
@@ -35,20 +57,23 @@ export class AccountUpdateComponent implements OnInit {
     private dateFormat: FormatDatePipe,
     private normalizeNumber: NormalizeNumberPipe,
     dateAdapter: DateAdapter<NativeDateAdapter>,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private dialogRef: MatDialogRef<AccountUpdateComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { 
-    dateAdapter.setLocale('pt-BR');
-
+    
+    let account = data.account;
     this.formAccount = this.fb.group({
-      codigo: [''],
-      mes: ['', Validators.required],
-      conta: ['', Validators.required],
-      valorConta: ['', Validators.required],
-      status: ['', Validators.required],
-      dataVencimento: ['', Validators.required],
-      dataPagamento: [''],
-      comentario: ['']
+      codigo: [account.codigo],
+      mes: [account.mes.codigo, Validators.required],
+      conta: [account.tipoConta.codigo, Validators.required],
+      valorConta: ['R$ ' + account.valorConta, Validators.required],
+      status: [account.status.codigo, Validators.required],
+      dataVencimento: [new Date(account.dataVencimento), Validators.required],
+      dataPagamento: [new Date(account.dataPagamento||"")],
+      comentario: [account.comentario]
     });
+    dateAdapter.setLocale('pt-BR');
   }
 
   ngOnInit(): void {
@@ -56,42 +81,10 @@ export class AccountUpdateComponent implements OnInit {
     this.accountService.listMes().subscribe(res => this.meses = res);
     this.accountService.listTypeAccount().subscribe(res => this.tipoContas = res);
     this.accountService.listStatusAccount().subscribe(res => this.statusContas = res);
-    this.loadAccount();
-  }
-
-  validFields() {
-    this.formAccount = this.fb.group({
-      codigo: [''],
-      mes: ['', Validators.required],
-      conta: ['', Validators.required],
-      valorConta: ['', Validators.required],
-      status: ['', Validators.required],
-      dataVencimento: ['', Validators.required],
-      dataPagamento: [''],
-      comentario: ['']
-    });
-  }
-
-  loadAccount() {
-   this.route.data.subscribe(
-     (info) => {
-       let account = info.account;
-       this.contaId = account.codigo;
-       this.formAccount?.controls['mes'].setValue(account.mes.codigo);
-       this.formAccount?.controls['conta'].setValue(account.tipoConta.codigo);
-       this.formAccount?.controls['valorConta'].setValue('R$ ' + account.valorConta);
-       this.formAccount?.controls['status'].setValue(account.status.codigo);
-       this.formAccount?.controls['dataVencimento'].setValue(new Date(account.dataVencimento));
-       this.formAccount?.controls['dataPagamento'].setValue(new Date(account.dataPagamento||""));
-       this.formAccount?.controls['comentario'].setValue(account.comentario);
-       this.mesId = account.mes.codigo;
-       console.log(account)
-     }
-   )
   }
 
   update(): void {
-    this.addCan= true;
+    this.addCan = true;
     const formValues = this.formAccount?.value;
     const mes = {
       codigo: formValues.mes
@@ -104,9 +97,9 @@ export class AccountUpdateComponent implements OnInit {
     const status = {
       codigo: formValues.status
     } as Status;
-
+    
     const account: Account = {
-      codigo: this.contaId,
+      codigo: formValues.codigo,
       emailUser: this.emailUser,
       valorConta: this.normalizeNumber.transform(formValues.valorConta),
       dataVencimento: this.dateFormat.transform(formValues.dataVencimento),
@@ -120,12 +113,9 @@ export class AccountUpdateComponent implements OnInit {
 
     this.accountService.update(account).subscribe(() => {
       this.accountService.showMessage('Conta atualizada com sucesso');
-      this.router.navigate(['/account/read', mes.codigo]);
+      this.accountService.filter(mes.codigo);
+      this.dialogRef.close();
     })
-  }
-
-  cancel(): void {
-    this.router.navigate(['/account/read', this.mesId]);
   }
 
   inputKeyPressAsBrlCurrency(event: KeyboardEvent) {

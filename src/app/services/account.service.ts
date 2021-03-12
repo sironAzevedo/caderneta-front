@@ -38,7 +38,13 @@ export class AccountService {
   }
 
   update(account: Account): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/v1/contas`, account);
+    return this.http.put<any>(`${this.baseUrl}/v1/contas`, account).pipe(
+      retry(3),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
+      })
+    );
   }
 
   deletAccount(email: string, id: number): Observable<any> {

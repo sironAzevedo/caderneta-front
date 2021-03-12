@@ -8,17 +8,17 @@
     </mat-form-field>
 
     <mat-form-field>
-        <mat-select class="form-control" id="create-conta" formControlName="conta" placeholder="Tipo de Conta" class="--small">
+        <mat-select class="form-control" id="create-conta" formControlName="conta" placeholder="Tipo de Conta" class="--small" required>
           <mat-option *ngFor="let conta of tipoContas" [value]="conta.codigo">{{conta.descricao}}</mat-option>
         </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput id="create-valorConta" formControlName="valorConta" placeholder="Valor da Conta (R$)" (keypress)="inputKeyPressAsBrlCurrency($event)">
+        <input matInput id="create-valorConta" formControlName="valorConta" placeholder="Valor da Conta (R$)" (keypress)="inputKeyPressAsBrlCurrency($event)" required>
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput [matDatepicker]="pickerDataVencimento" placeholder="Data de vencimento" id="create-dataVencimento" formControlName="dataVencimento" readonly="true">
+        <input matInput [matDatepicker]="pickerDataVencimento" placeholder="Data de vencimento" id="create-dataVencimento" formControlName="dataVencimento" readonly="true" required>
         <mat-datepicker-toggle matSuffix [for]="pickerDataVencimento"></mat-datepicker-toggle>
         <mat-datepicker touchUi="true" #pickerDataVencimento [startAt]="startDate"></mat-datepicker>
       </mat-form-field>
@@ -30,7 +30,7 @@
       </mat-form-field>
 
     <mat-form-field>
-        <mat-select class="form-control" id="create-status" formControlName="status" placeholder="Status de Conta" class="--small">
+        <mat-select class="form-control" id="create-status" formControlName="status" placeholder="Status de Conta" class="--small" required>
           <mat-option *ngFor="let status of statusContas" [value]="status.codigo">{{status.descricao}}</mat-option>
         </mat-select>
     </mat-form-field>
